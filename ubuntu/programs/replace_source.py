@@ -53,19 +53,16 @@ deb-src http://mirrors.163.com/ubuntu/ bionic-backports main restricted universe
 '''
 
 SOURCE_LIST_PATH='/etc/apt/sources.list'
+SOURCE=ALI_SOURCE
 
-def replace_source(source=ALI_SOURCE):
-    # If the backup file exists, then append the content of sources.list to the end of backup file
-    # Otherwise, create a new backup file with the content of sources.list
-    if os.path.exists('/etc/apt/sources.list.bak'):
-        os.system('echo "#BACKUP" >> /etc/apt/sources.list.bak')
-        os.system('cat /etc/apt/sources.list >> /etc/apt/sources.list.bak')
-    else:
-        os.system('cp /etc/apt/sources.list /etc/apt/sources.list.bak')
-    os.system('echo "{}" > /etc/apt/sources.list'.format(source))
+# If the backup file exists, then append the content of sources.list to the end of backup file
+# Otherwise, create a new backup file with the content of sources.list
+if os.path.exists('/etc/apt/sources.list.bak'):
+    os.system('echo "#BACKUP" >> /etc/apt/sources.list.bak')
+    os.system('cat /etc/apt/sources.list >> /etc/apt/sources.list.bak')
+else:
+    os.system('cp /etc/apt/sources.list /etc/apt/sources.list.bak')
+os.system('echo "{}" > /etc/apt/sources.list'.format(SOURCE))
 
-    # Update
-    os.system('apt-get update')
-
-if __name__ == "__main__":
-    replace_source(ALI_SOURCE)
+# Update
+os.system('apt-get update')
